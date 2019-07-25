@@ -41,9 +41,22 @@ to allow communication.
 #define APP_EUI "123456789ABCDEF"
 #define APP_KEY "123456789ABCDEF"
 ```
-the other parameters can be adjusted to adapt to the condition of use.   
-the ABP parameters will only be completed in the case of an ABP connection.   
 
+The other parameters can be adjusted to adapt to the condition of use.   
+The ABP parameters will only be completed in the case of an ABP connection. 
+### canne_avertisseuse.h
+```
+#define coef_pont 2
+```
+Use a multimeter to measure the voltage between pin A2 and GND and then between the 2 terminals of the battery. the coefficient will be VA2/VBAT.
+```
+#define tempo 60000 //en ms
+#define nbr_monitoring 60
+int compteur = nbr_monitoring;
+```
+tempo: time between 2 readings of the accelerometer and water sensors
+nbr_monitoring: number of monitoring to trigger a heartbeat 
+tempo × nbr_monitoring = heartbeat tempo
 
 
 
