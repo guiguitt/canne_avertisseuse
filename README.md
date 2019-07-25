@@ -27,8 +27,10 @@
 * regulateur DC/DC 4,6-32V ->3,3V https://fr.rs-online.com/web/p/regulateurs-a-decoupage/7553429/
 <img src=https://user-images.githubusercontent.com/32598441/61883931-9321c900-aefb-11e9-8f70-7ebc4981d139.jpg width="100" />
 * potentiometer resistance
+
 ## setting
-to start compiling the program and uploading it. By reading the serial port you can get the ```DEV_ID``` to configure the device on The Things network. 
+to start compiling the program and uploading it. By reading the serial port you can get the ```DEV_ID``` to configure the device on The Things network.
+
 ### Commissioning.h
 ```
 #define APP_EUI "123456789ABCDEF"
