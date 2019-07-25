@@ -37,6 +37,7 @@ you must enter the keys APP_EUI and APP_KEY to retrieve from the The Things Boar
 to allow communication.
 
 <img width="600" alt="APB" src="https://user-images.githubusercontent.com/32598441/61884974-5f47a300-aefd-11e9-8f04-65e8a9a95f3b.PNG">
+
 ```
 #define APP_EUI "123456789ABCDEF"
 #define APP_KEY "123456789ABCDEF"
@@ -56,7 +57,9 @@ int compteur = nbr_monitoring;
 ```
 tempo: time between 2 readings of the accelerometer and water sensors
 nbr_monitoring: number of monitoring to trigger a heartbeat 
-tempo × nbr_monitoring = heartbeat tempo
+```tempo × nbr_monitoring = heartbeat tempo```
+
+
 
 
 
