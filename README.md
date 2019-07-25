@@ -30,12 +30,13 @@
 
 ## setting
 to start compiling the program and uploading it. By reading the serial port you can get the ```DEV_ID``` to configure the device on The Things network.
+<img src=https://user-images.githubusercontent.com/32598441/61884466-9073a380-aefc-11e9-9db9-392b89730151.PNG width="1000" />
 
 ### Commissioning.h
 ```
 #define APP_EUI "123456789ABCDEF"
 #define APP_KEY "123456789ABCDEF"
 ```
-<img src=https://user-images.githubusercontent.com/32598441/61884466-9073a380-aefc-11e9-9db9-392b89730151.PNG width="1000" />
+
 
 
