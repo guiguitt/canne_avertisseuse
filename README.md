@@ -58,7 +58,7 @@ int compteur = nbr_monitoring;
 tempo: time between 2 readings of the accelerometer and water sensors
 nbr_monitoring: number of monitoring to trigger a heartbeat 
 ```tempo × nbr_monitoring = heartbeat tempo```
-
+<img width="600" alt="APB" src=
 
 
 
