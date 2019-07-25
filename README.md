@@ -3,6 +3,13 @@
 <img src=https://user-images.githubusercontent.com/32598441/61876867-1e945d80-aeee-11e9-9c76-71c7ecac0d3f.png width="500" />
 
 ### Compenent
+<img src=https://user-images.githubusercontent.com/32598441/61883824-679ede80-aefb-11e9-8246-e1c03fb2b4e8.jpg width="100" />
+<img src=https://user-images.githubusercontent.com/32598441/61883832-6a99cf00-aefb-11e9-862d-c804beff6443.jpg width="100" />
+<img src=https://user-images.githubusercontent.com/32598441/61883842-6e2d5600-aefb-11e9-97ed-8e78c9d13dd1.jpg width="100" />
+<img src=https://user-images.githubusercontent.com/32598441/61883851-71284680-aefb-11e9-8e40-f462b3d68d67.jpg width="100" />
+<img src=https://user-images.githubusercontent.com/32598441/61883903-8a30f780-aefb-11e9-9f2b-a45f07767ee2.jpg width="100" />
+<img src=https://user-images.githubusercontent.com/32598441/61883918-8ef5ab80-aefb-11e9-98b9-c4e7c0803b27.jpg width="100" />
+<img src=https://user-images.githubusercontent.com/32598441/61883931-9321c900-aefb-11e9-8f70-7ebc4981d139.jpg width="100" />
 * Arduino MKR WAN 1300 - 28€(25/07/2019) https://bit.ly/2GuevrS
 * Antenne for 868 MHZ - ~5€ https://bit.ly/2SDVVCL
 * GPS Adafruit 745 - 41€  https://bit.ly/2LHuB5R
