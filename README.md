@@ -33,11 +33,17 @@ to start compiling the program and uploading it. By reading the serial port you 
 <img src=https://user-images.githubusercontent.com/32598441/61884466-9073a380-aefc-11e9-9db9-392b89730151.PNG width="1000" />
 
 ### Commissioning.h
+you must enter the keys APP_EUI and APP_KEY to retrieve from the The Things Board application.
+to allow communication.
+
+<img width="600" alt="APB" src="https://user-images.githubusercontent.com/32598441/61884974-5f47a300-aefd-11e9-8f04-65e8a9a95f3b.PNG">
 ```
 #define APP_EUI "123456789ABCDEF"
 #define APP_KEY "123456789ABCDEF"
 ```
-<img width="600" alt="APB" src="https://user-images.githubusercontent.com/32598441/61884974-5f47a300-aefd-11e9-8f04-65e8a9a95f3b.PNG">
+the other parameters can be adjusted to adapt to the condition of use.   
+the ABP parameters will only be completed in the case of an ABP connection.   
+
 
 
 
