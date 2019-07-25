@@ -37,7 +37,7 @@ to start compiling the program and uploading it. By reading the serial port you 
 #define APP_EUI "123456789ABCDEF"
 #define APP_KEY "123456789ABCDEF"
 ```
-<img width="1000" alt="APB" src="https://user-images.githubusercontent.com/32598441/61884974-5f47a300-aefd-11e9-8f04-65e8a9a95f3b.PNG">
+<img width="600" alt="APB" src="https://user-images.githubusercontent.com/32598441/61884974-5f47a300-aefd-11e9-8f04-65e8a9a95f3b.PNG">
 
 
 
