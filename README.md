@@ -1,4 +1,5 @@
 # Canne-avertisseuse
+"La canne_avertisseuse" is an alert system for gravity irrigation. They use LoRa to communicate and detect the presence of water  
 ## Hardware
 <img src=https://user-images.githubusercontent.com/32598441/61876867-1e945d80-aeee-11e9-9c76-71c7ecac0d3f.png width="500" />
 
