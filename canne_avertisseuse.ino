@@ -6,6 +6,7 @@ void setup() {
   pinMode(GPS_EN, OUTPUT);
   digitalWrite(GPS_EN, GPS_ENABLE);
   startGPS();
+  if (GPS_ENABLE) start_fix();
 
   timer.every(1, outputGPS);
   //********LoRa initialization********************************************
@@ -15,22 +16,23 @@ void setup() {
   lora.info_connect();
 
   //********Sensor initialization********************************************
+
+  pinMode(SENSOR_PIN, INPUT);
+  digitalWrite(SENSOR_PIN, LOW);
   pinMode(BAT_PIN, INPUT);
-  analogReference(AR_INTERNAL1V0);
   if (!mma.begin()) {
     Serial.println("Accelerometre not found");
   }
   mma.setRange(MMA8451_RANGE_2_G);
   sensor();
-
-
-
 }
+
 void loop() {
 
 
-//********GPS read********************************************
-  if (GPS_ENABLE == true) {
+  //********GPS read********************************************
+
+  if (GPS_ENABLE == true && (millis() - GPS_timestart < 300000)) {
     digitalWrite(GPS_EN, GPS_ENABLE);
     outputGPS();
     if (readGPS(false)) {
@@ -54,7 +56,7 @@ void loop() {
   else {
     digitalWrite(LED_BUILTIN, HIGH);
     switch (STATE) {
-//********INITIAL STATE********************************************
+      //********INITIAL STATE********************************************
       case INITIAL:
         Serial.println("state:initial");
         sensor();
@@ -62,7 +64,7 @@ void loop() {
         send_all();
         STATE = MONITORING;
         break;
-//********INITIAL MONITORING********************************************
+      //********INITIAL MONITORING********************************************
       case MONITORING:
         Serial.println("state:monitoring");
         sensor();
@@ -72,18 +74,21 @@ void loop() {
         Serial.println("---------------");
         if ((diff[0] > mov_level) || (diff[1] > mov_level) || (diff[1] > mov_level)) {
           alerte =  alerte_MOV;
-          STATE = SEND;
+          send_all();
+          start_fix();
           Serial.println("ALERTE 2 ");
         }
         else if (mesure > 1000) {
           alerte = alerte_WATER;
-          STATE = SEND;
+          send_all();
+          start_fix();
           Serial.println("ALERTE 1 ");
 
         }
-        else if (batterie < 2) {
+        else if ((batterie / 32) * 1, 7 < 1 ) {
           alerte = alerte_BAT;
-          STATE = SEND;
+          send_all();
+          start_fix();
           Serial.println("ALERTE 3");
         }
         else {
@@ -93,19 +98,12 @@ void loop() {
             Serial.print(alerte);
             STATE = MONITORING;
             send_hearbeat();
+            start_fix();
             compteur = nbr_monitoring;
           }
           compteur--;
           Serial.println("compteur:" + String(compteur));
         }
-        break;
-//********SEND STATE********************************************
-      case SEND:
-        Serial.println("state:send");
-        send_all();
-        STATE = SEND;
-        GPS_ENABLE = true;
-        delay(30000);
         break;
     }
     //LowPower.deepSleep(tempo - 3000); // veille profonde seul la RTC reste allumer, temps de reveille long
@@ -116,9 +114,16 @@ void loop() {
 
 }
 void sensor() {
+  analogReference(AR_DEFAULT);
+  batterie = ((analogRead(BAT_PIN) / 1023 ) * 3.3 * coef_pont) - 11;
+  if (batterie < 0) {
+  batterie = 0;
+}
+else {
+  batterie = batterie / 1.7 * 32;
+}
 
-  batterie = conv.float_uint8(((analogRead(BAT_PIN) / 1023 ) * 3.3 * coef_pont) / 2, 1); //divide by 2 to enter on 6bit-> 63 max (12,6->6,3 multiply by 10) accuracy of 0,2V
-  Serial.println("Batterie:" + String(batterie));
+Serial.println("Batterie:" + String(batterie));
   mesure = analogRead(SENSOR_PIN);
   Serial.println("sensor:" + String(mesure));
   mma.read();
@@ -135,7 +140,7 @@ void sensor() {
 void send_all() {
   Serial.println("envoie totale");
   uint8_t buffer[9];
-  buffer[0] = (uint8_t)(alerte << 6) + (uint8_t)batterie;
+  buffer[0] = (uint8_t)(alerte << 5) + (uint8_t)batterie;
   buffer[1] = (uint8_t)(longitude >> 24);
   buffer[2] = (uint8_t)(longitude >> 16);
   buffer[3] = (uint8_t)(longitude >> 8);
@@ -148,6 +153,10 @@ void send_all() {
 }
 void send_hearbeat() {
   uint8_t buffer[1];
-  buffer[0] = (uint8_t)(alerte << 6) + (uint8_t)batterie;
+  buffer[0] = (uint8_t)(alerte << 5) + (uint8_t)batterie;
   lora.send(buffer, 1);
+}
+void start_fix() {
+  GPS_ENABLE = GPS_ON;
+  GPS_timestart = millis();
 }
