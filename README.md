@@ -68,11 +68,12 @@ nbr_monitoring: number of monitoring to trigger a heartbeat
 In the case of one of these alerts, a message containing the alert type, battery value and GPS coordinates is sent 
 otherwise only a heartbeat is sent regularly 
 ### Sensor
-* water sensor: it is made up of 2 electrodes if the current manages to pass between the 2 electrodes, the input A6 goes from 0v to ~3.3V. The water is detected 
-* accelerometer: If one of the acceleration values changes sufficiently on one of the axes, it can be deduced that the rod is no longer in its initial position 
+* Water sensor: it is made up of 2 electrodes if the current manages to pass between the 2 electrodes, the input A6 goes from 0v to ~3.3V. The water is detected 
+* Accelerometer: If one of the acceleration values changes sufficiently on one of the axes, it can be deduced that the rod is no longer in its initial position 
 * GPS: The GPS gives us the geographical position of the device. A measurement is only taken at the start or when a sensor detects something 
-* voltmeter for the battery: the battery level is regularly monitored to prevent any system failure    
+* Voltmeter for the battery: the battery level is regularly monitored to prevent any system failure    
 <img width="800" alt="APB" src="https://user-images.githubusercontent.com/32598441/61932097-cbb8b580-af82-11e9-87bf-863c2ab60e74.png">
+
 
 
 
