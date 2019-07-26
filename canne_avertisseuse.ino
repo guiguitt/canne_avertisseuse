@@ -120,7 +120,7 @@ void sensor() {
   batterie = 0;
 }
 else {
-  batterie = conv.float_uint8((mem / 1.7) * 32,1);
+  batterie = conv.float_uint8((mem / 1.7) * 32,0);
 }
 
 Serial.println("Batterie:" + String(batterie));
