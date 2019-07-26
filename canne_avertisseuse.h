@@ -7,28 +7,35 @@ Lora_Module lora;
 Conversion conv;
 
 //------------------------------------------
-//gps
+//GPS
 #include <timer.h>
 Timer <1, micros> timer;  // GPS reader
 int32_t latitude = conv.float_int32("43.619883", 5);
 int32_t longitude = conv.float_int32("3.851704", 5);
 int32_t altitude;
-boolean GPS_ENABLE = true;
+boolean GPS_ENABLE = false;
+
+
 //------------------------------------------
 //accélérometre
 #include <Wire.h>
 #include <Adafruit_MMA8451.h>
 #include <Adafruit_Sensor.h>
 Adafruit_MMA8451 mma = Adafruit_MMA8451();
+#define mov_level 200 //valeur à partir de la quelle la différence d'accélération sera pris en compte. entre -4048 et 4048  
 int X[2] = {0, 0};
 int Y[2] = {0, 0};
 int Z[2] = {0, 0};
 int diff[3];
+
+
 //******************************************
 //Pin
 #define GPS_EN 5 // Pin GPS enable
 #define SENSOR_PIN A6 // Water sensor pin(D-)
 #define BAT_PIN A2 // output of voltage divider bridge
+
+
 //******************************************
 uint8_t batterie;
 //#define coef_pont 3.8
@@ -51,7 +58,8 @@ enum {
 int STATE = INITIAL;
 
 #define tempo 60000 //en ms
-int compteur = 60;
+#define nbr_monitoring 60
+int compteur = nbr_monitoring;
 void sensor();
 void Initial();
 void send_hearbeat();

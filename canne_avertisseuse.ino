@@ -1,22 +1,22 @@
 #include "canne_avertisseuse.h"
 void setup() {
   Serial.begin(115200);
-  //while (!Serial) {}// debug only
+
+  //********GPS initialization********************************************
   pinMode(GPS_EN, OUTPUT);
-  pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(GPS_EN, GPS_ENABLE);
-
-  pinMode(BAT_PIN, INPUT);
-  analogReference(AR_INTERNAL1V0);
-
   startGPS();
-  timer.every(1, outputGPS);
 
+  timer.every(1, outputGPS);
+  //********LoRa initialization********************************************
   Serial.println("-------------------------------LoRa------------------------------");
   Serial.println("initialisation...");
   lora.Init();
   lora.info_connect();
 
+  //********Sensor initialization********************************************
+  pinMode(BAT_PIN, INPUT);
+  analogReference(AR_INTERNAL1V0);
   if (!mma.begin()) {
     Serial.println("Accelerometre not found");
   }
@@ -27,8 +27,11 @@ void setup() {
 
 }
 void loop() {
-  
+
+
+//********GPS read********************************************
   if (GPS_ENABLE == true) {
+    digitalWrite(GPS_EN, GPS_ENABLE);
     outputGPS();
     if (readGPS(false)) {
       timer.tick();
@@ -51,6 +54,7 @@ void loop() {
   else {
     digitalWrite(LED_BUILTIN, HIGH);
     switch (STATE) {
+//********INITIAL STATE********************************************
       case INITIAL:
         Serial.println("state:initial");
         sensor();
@@ -58,6 +62,7 @@ void loop() {
         send_all();
         STATE = MONITORING;
         break;
+//********INITIAL MONITORING********************************************
       case MONITORING:
         Serial.println("state:monitoring");
         sensor();
@@ -65,23 +70,20 @@ void loop() {
         diff[1] = abs(Y[0] - Y[1]);
         diff[2] = abs(Z[0] - Z[1]);
         Serial.println("---------------");
-        if ((diff[0] > 500) || (diff[1] > 500) || (diff[1] > 500)) {
+        if ((diff[0] > mov_level) || (diff[1] > mov_level) || (diff[1] > mov_level)) {
           alerte =  alerte_MOV;
           STATE = SEND;
           Serial.println("ALERTE 2 ");
-          GPS_ENABLE = true;
         }
         else if (mesure > 1000) {
           alerte = alerte_WATER;
           STATE = SEND;
-          GPS_ENABLE = true;
           Serial.println("ALERTE 1 ");
 
         }
         else if (batterie < 2) {
           alerte = alerte_BAT;
           STATE = SEND;
-          GPS_ENABLE = true;
           Serial.println("ALERTE 3");
         }
         else {
@@ -91,31 +93,31 @@ void loop() {
             Serial.print(alerte);
             STATE = MONITORING;
             send_hearbeat();
-            compteur = 60;
+            compteur = nbr_monitoring;
           }
           compteur--;
           Serial.println("compteur:" + String(compteur));
         }
         break;
+//********SEND STATE********************************************
       case SEND:
         Serial.println("state:send");
         send_all();
-        GPS_ENABLE = true;
         STATE = SEND;
-        delay(10000);
+        GPS_ENABLE = true;
+        delay(30000);
         break;
     }
-    digitalWrite(LED_BUILTIN, LOW);
     //LowPower.deepSleep(tempo - 3000); // veille profonde seul la RTC reste allumer, temps de reveille long
-    LowPower.sleep(tempo);//veille mode
+    //LowPower.sleep(tempo);//veille mode
     //LowPower.idle(tempo);// stanby mode,temps de reveille rapide
-    //delay(tempo);// mise en pause classique, consommation important, pas de temps de reveille
+    delay(tempo);// mise en pause classique, consommation important, pas de temps de reveille
   }
- 
+
 }
 void sensor() {
-  
-  batterie = conv.float_uint8(((analogRead(BAT_PIN) / 1023 )* 3.3 *coef_pont)/2, 1); //divide by 2 to enter on 6bit-> 63 max (12,6->6,3 multiply by 10) accuracy of 0,2V
+
+  batterie = conv.float_uint8(((analogRead(BAT_PIN) / 1023 ) * 3.3 * coef_pont) / 2, 1); //divide by 2 to enter on 6bit-> 63 max (12,6->6,3 multiply by 10) accuracy of 0,2V
   Serial.println("Batterie:" + String(batterie));
   mesure = analogRead(SENSOR_PIN);
   Serial.println("sensor:" + String(mesure));
