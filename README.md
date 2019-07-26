@@ -61,6 +61,9 @@ nbr_monitoring: number of monitoring to trigger a heartbeat
 ```tempo × nbr_monitoring = heartbeat tempo```
 
 ## Principle of operation
+### ALERT
+* water alert
+*
 
 <img width="800" alt="APB" src="https://user-images.githubusercontent.com/32598441/61931789-f9e9c580-af81-11e9-9f7c-5cd596a1c306.png">
 
