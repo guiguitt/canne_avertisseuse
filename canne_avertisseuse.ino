@@ -115,12 +115,12 @@ void loop() {
 }
 void sensor() {
   analogReference(AR_DEFAULT);
-  batterie = ((analogRead(BAT_PIN) / 1023 ) * 3.3 * coef_pont) - 11;
+ float mem = ((analogRead(BAT_PIN) / 1023 ) * 3.3 * coef_pont) - 11;
   if (batterie < 0) {
   batterie = 0;
 }
 else {
-  batterie = batterie / 1.7 * 32;
+  batterie = conv.float_uint8((mem / 1.7) * 32,1);
 }
 
 Serial.println("Batterie:" + String(batterie));
@@ -140,7 +140,7 @@ Serial.println("Batterie:" + String(batterie));
 void send_all() {
   Serial.println("envoie totale");
   uint8_t buffer[9];
-  buffer[0] = (uint8_t)(alerte << 5) + (uint8_t)batterie;
+  buffer[0] = (uint8_t)(alerte << 5) + (uint8_t)batterie & 0b11111;
   buffer[1] = (uint8_t)(longitude >> 24);
   buffer[2] = (uint8_t)(longitude >> 16);
   buffer[3] = (uint8_t)(longitude >> 8);

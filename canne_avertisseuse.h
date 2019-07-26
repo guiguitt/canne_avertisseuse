@@ -16,7 +16,7 @@ int32_t latitude = conv.float_int32("43.619883", 5);
 int32_t longitude = conv.float_int32("3.851704", 5);
 int32_t altitude;
 boolean GPS_ENABLE = true;
-boolean GPS_ON= false;
+boolean GPS_ON= true;
 unsigned long GPS_timestart;
 void start_fix();
 
@@ -44,7 +44,7 @@ int diff[3];
 //******************************************
 uint8_t batterie;
 #define coef_pont 3.8
-//#define coef_pont 2
+#define coef_pont 2
 
 
 int mesure;
