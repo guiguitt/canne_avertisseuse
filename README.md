@@ -17,7 +17,7 @@
 <img src=https://user-images.githubusercontent.com/32598441/61883832-6a99cf00-aefb-11e9-862d-c804beff6443.jpg width="100" />
 * GPS Adafruit 745 - 41€  https://bit.ly/2LHuB5R
 <img src=https://user-images.githubusercontent.com/32598441/61883842-6e2d5600-aefb-11e9-97ed-8e78c9d13dd1.jpg width="100" />
-* IMU Adafruit MMA8451 - 9€ https://bit.ly/2Mcii0F
+*accelerometer Adafruit MMA8451 - 9€ https://bit.ly/2Mcii0F
 <img src=https://user-images.githubusercontent.com/32598441/61883851-71284680-aefb-11e9-8e40-f462b3d68d67.jpg width="100" />
 
 * 2× Female connector 14 in line -3,41€ https://fr.rs-online.com/web/p/fiches-femelles-pour-ci/7679347/ 
@@ -63,9 +63,16 @@ nbr_monitoring: number of monitoring to trigger a heartbeat
 ## Principle of operation
 ### ALERT
 * water alert
-*
-
-<img width="800" alt="APB" src="https://user-images.githubusercontent.com/32598441/61931789-f9e9c580-af81-11e9-9f7c-5cd596a1c306.png">
+* motion/theft alert 
+* battery alert
+In the case of one of these alerts, a message containing the alert type, battery value and GPS coordinates is sent 
+otherwise only a heartbeat is sent regularly 
+### Sensor
+* water sensor: it is made up of 2 electrodes if the current manages to pass between the 2 electrodes, the input A6 goes from 0v to ~3.3V. The water is detected 
+* accelerometer: If one of the acceleration values changes sufficiently on one of the axes, it can be deduced that the rod is no longer in its initial position 
+* GPS: The GPS gives us the geographical position of the device. A measurement is only taken at the start or when a sensor detects something 
+* voltmeter for the battery: the battery level is regularly monitored to prevent any system failure    
+<img width="800" alt="APB" src="https://user-images.githubusercontent.com/32598441/61932097-cbb8b580-af82-11e9-87bf-863c2ab60e74.png">
 
 
 
